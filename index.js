@@ -39,8 +39,8 @@ function render(field, options) {
     row.map((cell, cellIndex) => {
       let fieldCell = document.createElement('div');
       fieldCell.className = 'field__cell';
-      fieldCell.style.width = `${gameOptions.cellWidth || 40}px`; 
-      fieldCell.style.height = `${gameOptions.cellWidth || 40}px`; 
+      fieldCell.style.width = `${options.cellWidth || 40}px`; 
+      fieldCell.style.height = `${options.cellWidth || 40}px`;
       fieldCell.addEventListener('click', (event) => {
           if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
               if (turn === 'Crosses') {
@@ -174,6 +174,6 @@ function newGame(field, winLine, turn, gameInfo) {
   gameInfo.textContent = `${turn} moves`;
 }
 
-render(field);
+render(field, gameOptions);
 
 // changeElementsSize("field__cell", `${gameOptions.cellWidth}px`);
