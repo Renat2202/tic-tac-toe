@@ -45,8 +45,8 @@ function render(field, options) {
           if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
               if (turn === 'Crosses') {
                   field[rowIndex][cellIndex] = 'cross';
-                  turn = 'Noughts';
                   event.target.classList.add("cross");
+                  turn = 'Noughts';
                   checkWinner(field, "cross", gameInfoField, winLine);
               } else {
                   field[rowIndex][cellIndex] = "nought";
@@ -64,35 +64,9 @@ function render(field, options) {
   });
 }
 
-// field
-// .map((row, rowIndex) => {
-//   row.map((cell, cellIndex) => {
-//     let fieldCell = document.createElement('div');
-//     fieldCell.className = 'field__cell';
-//     fieldCell.addEventListener('click', (event) => {
-//         if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
-//             if (turn === 'Crosses') {
-//                 field[rowIndex][cellIndex] = 'cross';
-//                 turn = 'Noughts';
-//                 event.target.classList.add("cross");
-//                 checkWinner(field, "cross", gameInfoField, winLine);
-//             } else {
-//                 field[rowIndex][cellIndex] = "nought";
-//                 event.target.classList.add("nought");
-//                 turn = "Crosses";
-//                 checkWinner(field, "nought", gameInfoField, winLine);
-//             }
-//         }
-//         if (!winner) {
-//             gameInfoField.textContent = `${turn} moves`;
-//         }
-//     });
-//     fieldNode.appendChild(fieldCell);
-//   });
-// });  
 
 newGameButton.addEventListener('click', (evt) => {
-  newGame(field, winLine, turn, gameInfoField);
+  newGame(field, winLine, gameInfoField);
 });
 
 
@@ -157,7 +131,7 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, turn, gameInfo) {
+function newGame(field, winLine, gameInfo) {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       field[i][j] = '';
@@ -172,8 +146,7 @@ function newGame(field, winLine, turn, gameInfo) {
   winner = null;
   turn = "Crosses";
   gameInfo.textContent = `${turn} moves`;
+  console.log(gameInfo)
 }
 
 render(field, gameOptions);
-
-// changeElementsSize("field__cell", `${gameOptions.cellWidth}px`);
