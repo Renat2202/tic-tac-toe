@@ -77,7 +77,7 @@ function render(field) {
 // });  
 
 newGameButton.addEventListener('click', (evt) => {
-  newGame(field, winLine, turn)
+  newGame(field, winLine, turn, gameInfoField);
 });
 
 
@@ -142,7 +142,7 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, turn) {
+function newGame(field, winLine, turn, gameInfo) {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       field[i][j] = '';
@@ -156,7 +156,7 @@ function newGame(field, winLine, turn) {
   winLine.className = `field__win-line`;
   winner = null;
   turn = "Crosses";
-  console.log(field);
+  gameInfo.textContent = `${turn} moves`;
 }
 
 render(field);
