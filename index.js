@@ -1,5 +1,10 @@
 let field = [];
-let cellsNumber = 9;
+// let cellsNumber = 9;
+
+let gameOptions = {
+  cellWidth: null,
+  cellNumber: 9
+}
 
 let fieldNode = document.querySelector('.field');
 let gameInfoField = document.querySelector(".game-info");
@@ -11,12 +16,12 @@ let winner = null;
 
 gameInfoField.textContent = `${turn} moves`;
 
-for (let i = 0; i < Math.sqrt(cellsNumber); i++) {
-    let row = [];
-    for (let j = 0; j < Math.sqrt(cellsNumber); j++) {
-        row.push('');
-    }
-    field.push(row);
+for (let i = 0; i < Math.sqrt(gameOptions.cellNumber); i++) {
+  let row = [];
+  for (let j = 0; j < Math.sqrt(gameOptions.cellNumber); j++) {
+    row.push("");
+  }
+  field.push(row);
 }
 
 
