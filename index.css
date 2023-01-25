@@ -59,42 +59,44 @@
 .field__win-line_row-1 {
   transition: opacity 0.5s;
   opacity: 1;
-  transform: translateY(21px);
+  top: 17%;
 }
 
 .field__win-line_row-2 {
   transition: opacity 0.5s;
   opacity: 1;
-  transform: translateY(62px);
+  top: 50%;
+  /* transform: translateY(4600%); */
 }
 
 .field__win-line_row-3 {
   transition: opacity 0.5s;
   opacity: 1;
-  transform: translateY(104px);
+  top: 83%;
+  /* transform: translateY(7700%); */
 }
 
 .field__win-line_column-1 {
   transition: opacity 0.5s;
   opacity: 1;
-  top: 62px;
-  left: -41px;
+  top: 50%;
+  left: -33%;
   transform: rotate(90deg);
 }
 
 .field__win-line_column-2 {
   transition: opacity 0.5s;
   opacity: 1;
-  top: 62px;
-  left: 0;
+  top: 50%;
+  left: 1%;
   transform: rotate(90deg);
 }
 
 .field__win-line_column-3 {
   transition: opacity 0.5s;
   opacity: 1;
-  top: 62px;
-  left: 41px;
+  top: 50%;
+  left: 33%;
   transform: rotate(90deg);
 }
 
@@ -102,7 +104,7 @@
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(45deg) scale(1.4);
-  top: 63px;
+  top: 50%;
   height: 2px;
 }
 
@@ -110,7 +112,7 @@
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(-45deg) scale(1.4);
-  top: 63px;
+  top: 50%;
   height: 2px;
 }
 

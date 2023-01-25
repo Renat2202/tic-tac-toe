@@ -2,7 +2,7 @@ let field = [];
 // let cellsNumber = 9;
 
 let gameOptions = {
-  cellWidth: null,
+  cellWidth: 60,
   cellNumber: 9
 }
 
@@ -24,19 +24,29 @@ for (let i = 0; i < Math.sqrt(gameOptions.cellNumber); i++) {
   field.push(row);
 }
 
+function changeElementsSize(nodesClassName, styleValue) {
+  let nodesList = document.querySelectorAll(`.${nodesClassName}`);
+  console.log(nodesList)
+  for (let element of nodesList) {
+    element.style.width = styleValue;
+    element.style.height = styleValue;
+  }
+}
 
-function render(field) {
+function render(field, options) {
   field
   .map((row, rowIndex) => {
     row.map((cell, cellIndex) => {
       let fieldCell = document.createElement('div');
       fieldCell.className = 'field__cell';
+      fieldCell.style.width = `${options.cellWidth || 40}px`; 
+      fieldCell.style.height = `${options.cellWidth || 40}px`;
       fieldCell.addEventListener('click', (event) => {
           if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
               if (turn === 'Crosses') {
                   field[rowIndex][cellIndex] = 'cross';
-                  turn = 'Noughts';
                   event.target.classList.add("cross");
+                  turn = 'Noughts';
                   checkWinner(field, "cross", gameInfoField, winLine);
               } else {
                   field[rowIndex][cellIndex] = "nought";
@@ -54,35 +64,9 @@ function render(field) {
   });
 }
 
-// field
-// .map((row, rowIndex) => {
-//   row.map((cell, cellIndex) => {
-//     let fieldCell = document.createElement('div');
-//     fieldCell.className = 'field__cell';
-//     fieldCell.addEventListener('click', (event) => {
-//         if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
-//             if (turn === 'Crosses') {
-//                 field[rowIndex][cellIndex] = 'cross';
-//                 turn = 'Noughts';
-//                 event.target.classList.add("cross");
-//                 checkWinner(field, "cross", gameInfoField, winLine);
-//             } else {
-//                 field[rowIndex][cellIndex] = "nought";
-//                 event.target.classList.add("nought");
-//                 turn = "Crosses";
-//                 checkWinner(field, "nought", gameInfoField, winLine);
-//             }
-//         }
-//         if (!winner) {
-//             gameInfoField.textContent = `${turn} moves`;
-//         }
-//     });
-//     fieldNode.appendChild(fieldCell);
-//   });
-// });  
 
 newGameButton.addEventListener('click', (evt) => {
-  newGame(field, winLine, turn, gameInfoField);
+  newGame(field, winLine, gameInfoField);
 });
 
 
@@ -147,7 +131,7 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, turn, gameInfo) {
+function newGame(field, winLine, gameInfo) {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       field[i][j] = '';
@@ -162,6 +146,7 @@ function newGame(field, winLine, turn, gameInfo) {
   winner = null;
   turn = "Crosses";
   gameInfo.textContent = `${turn} moves`;
+  console.log(gameInfo)
 }
 
-render(field);
+render(field, gameOptions);
