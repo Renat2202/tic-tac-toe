@@ -2,7 +2,7 @@ let field = [];
 // let cellsNumber = 9;
 
 let gameOptions = {
-  cellWidth: 60,
+  cellSize: 60,
   cellNumber: 9
 }
 
@@ -102,7 +102,7 @@ optionsPopupForm.addEventListener('submit', (evt) => {
   }
   console.log(options)
   submitOptions(options);
-closePopup(optionsPopup, optionsPopupOpenedClass);
+  closePopup(optionsPopup, optionsPopupOpenedClass);
 })
 
 
@@ -119,6 +119,7 @@ function closePopup(popup, openedPopupClassName) {
 }
 
 function submitOptions(options) {
+  gameOptions.cellSize = options.cellSize;
   newGame(field, winLine, gameInfoField, options);
 }
 
@@ -184,7 +185,7 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, gameInfo, options) {
+function newGame(field, winLine, gameInfo) {
 
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
@@ -199,9 +200,9 @@ function newGame(field, winLine, gameInfo, options) {
   winner = null;
   turn = "Crosses";
   gameInfo.textContent = `${turn} moves`;
-  if (options?.cellSize) {
-    changeElementsSize("field__cell", options.cellSize);
-  }
+  // if (options?.cellSize) {
+    changeElementsSize("field__cell", gameOptions.cellSize);
+  // }
 }
 
 render(field, gameOptions);
