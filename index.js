@@ -10,6 +10,15 @@ let fieldNode = document.querySelector('.field');
 let gameInfoField = document.querySelector(".game-info");
 let winLine = document.querySelector(".field__win-line");
 let newGameButton = document.querySelector(".new-game-button");
+let optionsButton = document.querySelector(".options-button");
+let optionsPopup = document.querySelector(".options-popup");
+let optionsPopupCloseButton = document.querySelector(".options-popup__close-button");
+let optionsPopupForm = document.querySelector(".options-popup__form");
+let optionsPopupInputCellSize = document.querySelector("#cell-size");
+let optionsPopupInputCellNumber = document.querySelector("#cell-number");
+
+
+let optionsPopupOpenedClass = "options-popup_opened";
 
 let turn = 'Crosses';
 let winner = null;
@@ -24,12 +33,13 @@ for (let i = 0; i < Math.sqrt(gameOptions.cellNumber); i++) {
   field.push(row);
 }
 
+
+
 function changeElementsSize(nodesClassName, styleValue) {
   let nodesList = document.querySelectorAll(`.${nodesClassName}`);
-  console.log(nodesList)
   for (let element of nodesList) {
-    element.style.width = styleValue;
-    element.style.height = styleValue;
+    element.style.width = `${styleValue}px`;
+    element.style.height = `${styleValue}px`;
   }
 }
 
@@ -39,8 +49,8 @@ function render(field, options) {
     row.map((cell, cellIndex) => {
       let fieldCell = document.createElement('div');
       fieldCell.className = 'field__cell';
-      fieldCell.style.width = `${options.cellWidth || 40}px`; 
-      fieldCell.style.height = `${options.cellWidth || 40}px`;
+      fieldCell.style.width = `${options.cellSize || 40}px`; 
+      fieldCell.style.height = `${options.cellSize || 40}px`;
       fieldCell.addEventListener('click', (event) => {
           if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
               if (turn === 'Crosses') {
@@ -68,6 +78,49 @@ function render(field, options) {
 newGameButton.addEventListener('click', (evt) => {
   newGame(field, winLine, gameInfoField);
 });
+
+optionsPopupCloseButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  closePopup(optionsPopup, optionsPopupOpenedClass);
+});
+
+optionsButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  openPopup(optionsPopup, optionsPopupOpenedClass);
+});
+
+// optionsPopupInputCellSize.addEventListener('change', (evt) => {
+//   evt.preventDefault();
+
+// })
+
+optionsPopupForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  let options = {
+    'cellSize': optionsPopupInputCellSize.value,
+    // 'cellNumber': optionsPopupInputCellNumber.value
+  }
+  console.log(options)
+  submitOptions(options);
+closePopup(optionsPopup, optionsPopupOpenedClass);
+})
+
+
+function openPopup(popup, openedPopupClassName) {
+  if (!popup.classList.contains(openedPopupClassName)) {
+    popup.classList.add(openedPopupClassName);
+  }
+}
+
+function closePopup(popup, openedPopupClassName) {
+  if (popup.classList.contains(openedPopupClassName)) {
+    popup.classList.remove(openedPopupClassName);
+  }
+}
+
+function submitOptions(options) {
+  newGame(field, winLine, gameInfoField, options);
+}
 
 
 function checkWinner(array, value, textField, winLine) {
@@ -131,14 +184,14 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, gameInfo) {
+function newGame(field, winLine, gameInfo, options) {
+
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       field[i][j] = '';
     }
   }
   let cells = document.querySelectorAll(".field__cell");
-  console
   for (let cell of cells) {
     cell.className = "field__cell";
   }
@@ -146,7 +199,9 @@ function newGame(field, winLine, gameInfo) {
   winner = null;
   turn = "Crosses";
   gameInfo.textContent = `${turn} moves`;
-  console.log(gameInfo)
+  if (options?.cellSize) {
+    changeElementsSize("field__cell", options.cellSize);
+  }
 }
 
 render(field, gameOptions);

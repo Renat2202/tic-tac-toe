@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <h1 class="title">Tic-tac-toe</h1>
         <div class="playground">
             <div class="field">
                 <span class="field__win-line"></span>
@@ -21,14 +22,17 @@
                 </div>       
             </div>  
         </div>
-        <!-- <div class="options-popup">
-            <form class="options-popup__form">
-                <label class="options-popup__label" for="cell-size">Размер ячейки</label>
-                <input class="options-popup__input" type="range" name="" id="cell-size" min="20" max="120" step="10">      
-                <label class="options-popup__label" for="cell-number">Количество ячеек</label>  
-                <input class="options-popup__input" type="range" name="" id="cell-number" min="3" max="7" step="1">       
-            </form>
-        </div> -->
+    </div>
+    <div class="options-popup">
+        <form class="options-popup__form">
+            <button class="options-popup__close-button"></button>
+            <h2 class="options-popup__title">Настройки игры</h2>
+            <label class="options-popup__label" for="cell-size">Размер ячейки</label>
+            <input class="options-popup__input options-popup__input-cell-size" type="range" name="" id="cell-size" min="20" max="120" step="10">      
+            <!-- <label class="options-popup__label" for="cell-number">Количество ячеек</label>  
+            <input class="options-popup__input options-popup__input-cell-number" type="range" name="" id="cell-number" min="3" max="7" step="1">     -->
+            <input class="options-popup__submit-button" type="submit" value="Новая игра">   
+        </form>
     </div>
     <script src="./index.js"></script>
 </body>
