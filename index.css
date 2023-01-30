@@ -3,6 +3,23 @@
   margin: 0 auto;
 }
 
+.header {
+  display: flex;
+  padding: 10px 20px;
+}
+
+.header__logo {
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  background: url('./images/tic-tac-toe-logo.svg') no-repeat center/contain;
+}
+
+.header__title {
+  text-align: center;
+  flex-grow: 1;
+}
+
 .playground {
     display: flex;
 }
