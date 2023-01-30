@@ -3,7 +3,7 @@ let field = [];
 
 let gameOptions = {
   cellSize: 60,
-  cellNumber: 9
+  cellNumber: 3
 }
 
 let fieldNode = document.querySelector('.field');
@@ -23,11 +23,14 @@ let optionsPopupOpenedClass = "options-popup_opened";
 let turn = 'Crosses';
 let winner = null;
 
+fieldNode.style.gridTemplateColumns = `repeat(${gameOptions.cellNumber}, 1fr)`;
+fieldNode.style.gridTemplateRows = `repeat(${gameOptions.cellNumber}, 1fr)`;
+
 gameInfoField.textContent = `${turn} moves`;
 
-for (let i = 0; i < Math.sqrt(gameOptions.cellNumber); i++) {
+for (let i = 0; i < gameOptions.cellNumber; i++) {
   let row = [];
-  for (let j = 0; j < Math.sqrt(gameOptions.cellNumber); j++) {
+  for (let j = 0; j < gameOptions.cellNumber; j++) {
     row.push("");
   }
   field.push(row);
@@ -37,6 +40,7 @@ for (let i = 0; i < Math.sqrt(gameOptions.cellNumber); i++) {
 
 function changeElementsSize(nodesClassName, styleValue) {
   let nodesList = document.querySelectorAll(`.${nodesClassName}`);
+  console.log(styleValue)
   for (let element of nodesList) {
     element.style.width = `${styleValue}px`;
     element.style.height = `${styleValue}px`;
@@ -49,8 +53,8 @@ function render(field, options) {
     row.map((cell, cellIndex) => {
       let fieldCell = document.createElement('div');
       fieldCell.className = 'field__cell';
-      fieldCell.style.width = `${options.cellSize || 40}px`; 
-      fieldCell.style.height = `${options.cellSize || 40}px`;
+      fieldCell.style.width = `${options.cellSize}px`; 
+      fieldCell.style.height = `${options.cellSize}px`;
       fieldCell.addEventListener('click', (event) => {
           if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
               if (turn === 'Crosses') {
@@ -98,7 +102,7 @@ optionsPopupForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   let options = {
     'cellSize': optionsPopupInputCellSize.value,
-    // 'cellNumber': optionsPopupInputCellNumber.value
+    'cellNumber': optionsPopupInputCellNumber.value
   }
   console.log(options)
   submitOptions(options);
@@ -120,6 +124,7 @@ function closePopup(popup, openedPopupClassName) {
 
 function submitOptions(options) {
   gameOptions.cellSize = options.cellSize;
+  gameOptions.cellNumber = options.cellNumber;
   newGame(field, winLine, gameInfoField, options);
 }
 
@@ -139,13 +144,13 @@ function checkWinner(array, value, textField, winLine) {
   }
 
   // check columns
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < gameOptions.cellNumber; i++) {
     let count = 0;
-    for (let j = 0; j < 3; j++) {
+    for (let j = 0; j < gameOptions.cellNumber; j++) {
       if (array[j][i] === value) {
         count++;
       }
-      if (count === 3) {
+      if (count === gameOptions.cellNumber) {
         winner = value;
         textField.textContent = `Winner - ${winner}`;
         winLine.classList.add(`field__win-line_column-${i + 1}`);
@@ -157,11 +162,11 @@ function checkWinner(array, value, textField, winLine) {
 
   // check diagonal
   let count = 0;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < gameOptions.cellNumber; i++) {
     if (array[i][i] === value) {
         count++;
     }
-    if (count === 3) {
+    if (count === gameOptions.cellNumber) {
         winner = value;
         textField.textContent = `Winner - ${winner}`;
         winLine.classList.add(`field__win-line_diagonal-1`);
@@ -171,11 +176,11 @@ function checkWinner(array, value, textField, winLine) {
   }
 
   count = 0;
-  for (let i = 0, j = 2; i < 3, j >= 0; i++, j--) {
+  for (let i = 0, j = gameOptions.cellNumber - 1; i < gameOptions.cellNumber, j >= 0; i++, j--) {
     if (array[j][i] === value) {
         count++
     }
-    if (count === 3) {
+    if (count === gameOptions.cellNumber) {
         winner = value;
         textField.textContent = `Winner - ${winner}`;
         winLine.classList.add(`field__win-line_diagonal-2`);
@@ -185,13 +190,17 @@ function checkWinner(array, value, textField, winLine) {
   }
 }
 
-function newGame(field, winLine, gameInfo) {
-
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      field[i][j] = '';
+function newGame(field, winLine, gameInfo, options) {
+  for (let i = 0; i < gameOptions.cellNumber; i++) {
+    for (let j = 0; j < gameOptions.cellNumber; j++) {
+      field[i][j] = "";
     }
   }
+  // let newField = [];
+
+
+
+
   let cells = document.querySelectorAll(".field__cell");
   for (let cell of cells) {
     cell.className = "field__cell";
@@ -200,8 +209,9 @@ function newGame(field, winLine, gameInfo) {
   winner = null;
   turn = "Crosses";
   gameInfo.textContent = `${turn} moves`;
-  // if (options?.cellSize) {
-    changeElementsSize("field__cell", gameOptions.cellSize);
+  console.log(options.cellSize, gameOptions.cellSize)
+  // if (options.cellSize !== gameOptions.cellSize) {
+    changeElementsSize("field__cell", options.cellSize);
   // }
 }
 
