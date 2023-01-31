@@ -197,10 +197,12 @@ function checkWinner(array, value, textField, winLine) {
       if (count === +gameOptions.cellNumber) {
         winner = value;
         textField.textContent = `Winner - ${winner}`;
-        // winLine.classList.add(`field__win-line_column-${i + 1}`);
+        // winLine.classList.add(`field__win-line_column-${i + 1}`); // old
         winLine.classList.add(`field__win-line_column-active`);
-        // margin-left: calc((-60px * 2) + (60px * 2) + 30px);
-        winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`;
+        // margin-left: calc((-60px * 2) + (60px * 2) + 30px); // old
+        // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`; // old
+        // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / (+gameOptions.cellNumber % 2 === 0 ? 2 : 1))}px`; // old
+        winLine.style.marginLeft = `${(+gameOptions.cellSize/2) + (+gameOptions.cellSize * i)}px`;
         console.log(`Winner - ${winner}`);
         return;
       }
@@ -267,6 +269,7 @@ function newGame(field, winLine, gameInfo, options) {
   winLine.className = `field__win-line`;
   winner = null;
   turn = "Crosses";
+  turnTumbler.className = `turn-block__tumbler turn-block__tumbler_crosses`;
   // gameInfo.textContent = `${turn} moves`; // deleted while tumbler added 
   console.log(options.cellSize, gameOptions.cellSize)
   // if (options.cellSize !== gameOptions.cellSize) {
