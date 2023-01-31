@@ -22,17 +22,18 @@
 
 .playground {
     display: flex;
+    flex-direction: column;
 }
 
 .game-info {
-  margin: 0;
+  margin: 0 0 0 25px;
   font-size: 24px;
   font-weight: bold;
 }
 
 .control {
   display: flex;
-  margin: 30px 0 0;
+  margin: 0 25px 0 0;
 }
 
 .new-game-button {
@@ -60,6 +61,8 @@
 }
 
 .field {
+    margin: 35px 0 0;
+    align-self: center;
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -68,11 +71,12 @@
 }
 
 .field__content {
-  width: 200px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin: 0 30px;
+  justify-content: space-between;
+  margin: 25px 0 0;
 }
 
 .field__cell {
