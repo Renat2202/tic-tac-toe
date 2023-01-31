@@ -9,15 +9,40 @@
 </head>
 <body>
     <div class="container">
+        <header class="header">
+            <a class="header__logo" href="#"></a>
+            <h1 class="header__title">Tic-tac-toe</h1>
+        </header>
         <div class="playground">
+            <div class="field__content">
+                <span class="game-info"></span>
+                <div class="control">
+                    <button class="new-game-button">New Game</button>
+                    <button class="options-button"></button>
+                </div>       
+            </div>  
             <div class="field">
                 <span class="field__win-line"></span>
             </div>
-            <div class="field__content">
-                <span class="game-info"></span>
-                <button class="new-game-button">New Game</button>          
-            </div>  
+            
         </div>
+    </div>
+    <div class="options-popup">
+        <form class="options-popup__form">
+            <button class="options-popup__close-button"></button>
+            <h2 class="options-popup__title">Game options</h2>
+            <fieldset class="options-popup__fieldset">
+                <label class="options-popup__label" for="cell-size">Cell size</label>
+                <span class="options-popup__input-value">3</span>
+                <input class="options-popup__input options-popup__input-cell-size" type="range" name="" id="cell-size" min="30" max="120" step="10" value="60">
+            </fieldset>
+            <fieldset class="options-popup__fieldset">
+                <label class="options-popup__label" for="cell-number">Cells number</label>  
+                <span class="options-popup__input-value">3</span>
+                <input class="options-popup__input options-popup__input-cell-number" type="range" name="" id="cell-number" min="3" max="7" step="1" value="3">
+            </fieldset>
+            <input class="options-popup__submit-button" type="submit" value="Save changes">   
+        </form>
     </div>
     <script src="./index.js"></script>
 </body>
