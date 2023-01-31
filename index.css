@@ -76,6 +76,7 @@
 }
 
 .field__cell {
+  box-sizing: border-box;
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -93,48 +94,16 @@
   z-index: 2;
 }
 
-.field__win-line_row-1 {
-  transition: opacity 0.5s;
+.field__win-line_row-active {
   opacity: 1;
-  top: 17%;
+  transition: opacity 0.5s;
 }
 
-.field__win-line_row-2 {
-  transition: opacity 0.5s;
+.field__win-line_column-active {
   opacity: 1;
-  top: 50%;
-  /* transform: translateY(4600%); */
-}
-
-.field__win-line_row-3 {
   transition: opacity 0.5s;
-  opacity: 1;
-  top: 83%;
-  /* transform: translateY(7700%); */
-}
-
-.field__win-line_column-1 {
-  transition: opacity 0.5s;
-  opacity: 1;
-  top: 50%;
-  left: -33%;
   transform: rotate(90deg);
-}
-
-.field__win-line_column-2 {
-  transition: opacity 0.5s;
-  opacity: 1;
-  top: 50%;
-  left: 1%;
-  transform: rotate(90deg);
-}
-
-.field__win-line_column-3 {
-  transition: opacity 0.5s;
-  opacity: 1;
-  top: 50%;
-  left: 33%;
-  transform: rotate(90deg);
+  margin-top: 50%;
 }
 
 .field__win-line_diagonal-1 {
@@ -274,19 +243,33 @@
 
 .options-popup__title {
   margin: 0;
+  text-align: center;
 }
+
+.options-popup__fieldset {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  border: none;
+}
+
+.options-popup__fieldset:first-of-type {
+  margin-top: 15px;
+} 
 
 .options-popup__label {
 
 }
 
-.options-popup__label:not(:first-child) {
-  margin-top: 20px;
-}
-
 .options-popup__input {
+  width: 100%;
   margin: 0;
   margin-top: 10px;
+}
+
+.options-popup__input-value {
+  flex-grow: 1;
+  text-align: right;
 }
 
 .options-popup__submit-button {
