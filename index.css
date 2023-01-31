@@ -26,9 +26,48 @@
 }
 
 .game-info {
-  margin: 0 0 0 25px;
+  margin: 0;
   font-size: 24px;
   font-weight: bold;
+}
+
+.turn-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.turn-block__turns {
+  display: flex;
+}
+
+.turn {
+  text-align: center;
+  width: 150px;
+  font-size: 20px;
+}
+
+.turn_cross {
+
+}
+
+.turn_nought {
+
+}
+
+.turn-block__tumbler {
+  width: 100px;
+  height: 100px;
+  background: url('./images/arrow-tumbler.svg') no-repeat center/contain;
+  transition: transform 0.5s;
+}
+
+.turn-block__tumbler_noughts {
+  transform: rotate(0deg);
+}
+
+.turn-block__tumbler_crosses {
+  transform: rotate(-120deg);
 }
 
 .control {
@@ -74,7 +113,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin: 25px 0 0;
 }

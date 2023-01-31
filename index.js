@@ -19,12 +19,17 @@ let optionsPopupInputCellSize = document.querySelector("#cell-size"); // Input C
 let optionsPopupInputCellNumber = document.querySelector("#cell-number"); // Ipnut Cell Number
 let optionsInputValueTextsList = document.querySelectorAll(".options-popup__input-value"); // Input Value Span
 
+let turnTumbler = document.querySelector(".turn-block__tumbler");// Turn Tumbler Arrow
 
 let optionsPopupOpenedClass = "options-popup_opened"; // Opened Popup Class
 
 let turn = 'Crosses'; // Current Turn
 let winner = null; // Winner
 
+// set Tumbler class
+if (turn === "Crosses") {
+  turnTumbler.classList.add(".turn-block__tumbler_crosses");
+}
 
 // Set Grid Style For Game Field
 fieldNode.style.gridTemplateColumns = `repeat(${gameOptions.cellNumber}, 1fr)`;
@@ -32,7 +37,7 @@ fieldNode.style.gridTemplateRows = `repeat(${gameOptions.cellNumber}, 1fr)`;
 
 
 // Set Current Turn Information in info span
-gameInfoField.textContent = `${turn} moves`;
+// gameInfoField.textContent = `${turn} moves`; // deleted while tumbler added 
 
 
 // Set input value to text span
@@ -73,22 +78,30 @@ function render(field, options) {
       fieldNode.style.gridTemplateColumns = `repeat(${options.cellNumber}, 1fr)`;
       fieldNode.style.gridTemplateRows = `repeat(${options.cellNumber}, 1fr)`;
       fieldCell.addEventListener('click', (event) => {
-          if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
-              if (turn === 'Crosses') {
-                  field[rowIndex][cellIndex] = 'cross';
-                  event.target.classList.add("cross");
-                  turn = 'Noughts';
-                  checkWinner(field, "cross", gameInfoField, winLine);
-              } else {
-                  field[rowIndex][cellIndex] = "nought";
-                  event.target.classList.add("nought");
-                  turn = "Crosses";
-                  checkWinner(field, "nought", gameInfoField, winLine);
-              }
+        if (
+          !fieldCell.classList.contains("nought") &&
+          !fieldCell.classList.contains("cross") &&
+          !winner
+        ) {
+          if (turn === "Crosses") {
+            field[rowIndex][cellIndex] = "cross";
+            event.target.classList.add("cross");
+            turn = "Noughts";
+            turnTumbler.classList.remove("turn-block__tumbler_crosses");
+            turnTumbler.classList.add("turn-block__tumbler_noughts");
+            checkWinner(field, "cross", gameInfoField, winLine);
+          } else {
+            field[rowIndex][cellIndex] = "nought";
+            event.target.classList.add("nought");
+            turn = "Crosses";
+            turnTumbler.classList.remove("turn-block__tumbler_noughts");
+            turnTumbler.classList.add("turn-block__tumbler_crosses");
+            checkWinner(field, "nought", gameInfoField, winLine);
           }
-          if (!winner) {
-              gameInfoField.textContent = `${turn} moves`;
-          }
+        }
+        // if (!winner) {
+        //     gameInfoField.textContent = `${turn} moves`; // deleted while tumbler added
+        // }
       });
       fieldNode.appendChild(fieldCell);
     });
@@ -254,7 +267,7 @@ function newGame(field, winLine, gameInfo, options) {
   winLine.className = `field__win-line`;
   winner = null;
   turn = "Crosses";
-  gameInfo.textContent = `${turn} moves`;
+  // gameInfo.textContent = `${turn} moves`; // deleted while tumbler added 
   console.log(options.cellSize, gameOptions.cellSize)
   // if (options.cellSize !== gameOptions.cellSize) {
     changeElementsSize("field__cell", options.cellSize);
