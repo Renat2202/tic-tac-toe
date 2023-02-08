@@ -19,12 +19,17 @@ let optionsPopupInputCellSize = document.querySelector("#cell-size"); // Input C
 let optionsPopupInputCellNumber = document.querySelector("#cell-number"); // Ipnut Cell Number
 let optionsInputValueTextsList = document.querySelectorAll(".options-popup__input-value"); // Input Value Span
 
+let turnTumbler = document.querySelector(".turn-block__tumbler");// Turn Tumbler Arrow
 
 let optionsPopupOpenedClass = "options-popup_opened"; // Opened Popup Class
 
 let turn = 'Crosses'; // Current Turn
 let winner = null; // Winner
 
+// set Tumbler class
+if (turn === "Crosses") {
+  turnTumbler.classList.add(".turn-block__tumbler_crosses");
+}
 
 // Set Grid Style For Game Field
 fieldNode.style.gridTemplateColumns = `repeat(${gameOptions.cellNumber}, 1fr)`;
@@ -32,7 +37,7 @@ fieldNode.style.gridTemplateRows = `repeat(${gameOptions.cellNumber}, 1fr)`;
 
 
 // Set Current Turn Information in info span
-gameInfoField.textContent = `${turn} moves`;
+// gameInfoField.textContent = `${turn} moves`; // deleted while tumbler added 
 
 
 // Set input value to text span
@@ -53,7 +58,7 @@ for (let i = 0; i < gameOptions.cellNumber; i++) {
 // Change Element Size Styles function
 function changeElementsSize(nodesClassName, styleValue) {
   let nodesList = document.querySelectorAll(`.${nodesClassName}`);
-  console.log(styleValue)
+  // console.log(styleValue)
   for (let element of nodesList) {
     element.style.width = `${styleValue}px`;
     element.style.height = `${styleValue}px`;
@@ -73,22 +78,30 @@ function render(field, options) {
       fieldNode.style.gridTemplateColumns = `repeat(${options.cellNumber}, 1fr)`;
       fieldNode.style.gridTemplateRows = `repeat(${options.cellNumber}, 1fr)`;
       fieldCell.addEventListener('click', (event) => {
-          if (!fieldCell.classList.contains('nought') && !fieldCell.classList.contains('cross') && !winner) {
-              if (turn === 'Crosses') {
-                  field[rowIndex][cellIndex] = 'cross';
-                  event.target.classList.add("cross");
-                  turn = 'Noughts';
-                  checkWinner(field, "cross", gameInfoField, winLine);
-              } else {
-                  field[rowIndex][cellIndex] = "nought";
-                  event.target.classList.add("nought");
-                  turn = "Crosses";
-                  checkWinner(field, "nought", gameInfoField, winLine);
-              }
+        if (
+          !fieldCell.classList.contains("nought") &&
+          !fieldCell.classList.contains("cross") &&
+          !winner
+        ) {
+          if (turn === "Crosses") {
+            field[rowIndex][cellIndex] = "cross";
+            event.target.classList.add("cross");
+            turn = "Noughts";
+            turnTumbler.classList.remove("turn-block__tumbler_crosses");
+            turnTumbler.classList.add("turn-block__tumbler_noughts");
+            checkWinner(field, "cross", gameInfoField, winLine);
+          } else {
+            field[rowIndex][cellIndex] = "nought";
+            event.target.classList.add("nought");
+            turn = "Crosses";
+            turnTumbler.classList.remove("turn-block__tumbler_noughts");
+            turnTumbler.classList.add("turn-block__tumbler_crosses");
+            checkWinner(field, "nought", gameInfoField, winLine);
           }
-          if (!winner) {
-              gameInfoField.textContent = `${turn} moves`;
-          }
+        }
+        // if (!winner) {
+        //     gameInfoField.textContent = `${turn} moves`; // deleted while tumbler added
+        // }
       });
       fieldNode.appendChild(fieldCell);
     });
@@ -168,7 +181,8 @@ function checkWinner(array, value, textField, winLine) {
       // winLine.classList.add(`field__win-line_row-${i + 1}`);
       winLine.classList.add(`field__win-line_row-active`);
       console.log(`(${gameOptions.cellSize} * ${i +1}) - (${gameOptions.cellSize} / 2)`);
-      winLine.style.marginTop = `${(+gameOptions.cellSize * (i + 1)) - (+gameOptions.cellSize/2)}px`
+      winLine.style.marginTop = `${(+gameOptions.cellSize * (i + 1)) - (+gameOptions.cellSize/2)}px`;
+      // console.log(winLine.style.marginTop);
       console.log(`Winner - ${winner}`);
       return;
     }
@@ -184,10 +198,13 @@ function checkWinner(array, value, textField, winLine) {
       if (count === +gameOptions.cellNumber) {
         winner = value;
         textField.textContent = `Winner - ${winner}`;
-        // winLine.classList.add(`field__win-line_column-${i + 1}`);
+        // winLine.classList.add(`field__win-line_column-${i + 1}`); // old
         winLine.classList.add(`field__win-line_column-active`);
-        // margin-left: calc((-60px * 2) + (60px * 2) + 30px);
-        winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`;
+        // margin-left: calc((-60px * 2) + (60px * 2) + 30px); // old
+        // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`; // old
+        // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / (+gameOptions.cellNumber % 2 === 0 ? 2 : 1))}px`; // old
+        winLine.style.marginLeft = `${(+gameOptions.cellSize/2) + (+gameOptions.cellSize * i)}px`;
+        // console.log(winLine.style.marginLeft);
         console.log(`Winner - ${winner}`);
         return;
       }
@@ -254,8 +271,11 @@ function newGame(field, winLine, gameInfo, options) {
   winLine.className = `field__win-line`;
   winner = null;
   turn = "Crosses";
-  gameInfo.textContent = `${turn} moves`;
-  console.log(options.cellSize, gameOptions.cellSize)
+  turnTumbler.className = `turn-block__tumbler turn-block__tumbler_crosses`;
+  gameInfo.textContent = "";
+  winLine.style.marginLeft = '';
+  winLine.style.marginTop = '';
+  // gameInfo.textContent = `${turn} moves`; // deleted while tumbler added 
   // if (options.cellSize !== gameOptions.cellSize) {
     changeElementsSize("field__cell", options.cellSize);
   // }

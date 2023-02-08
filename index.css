@@ -26,9 +26,48 @@
 }
 
 .game-info {
-  margin: 0 0 0 25px;
+  margin: 0;
   font-size: 24px;
   font-weight: bold;
+}
+
+.turn-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.turn-block__turns {
+  display: flex;
+}
+
+.turn {
+  text-align: center;
+  width: 150px;
+  font-size: 20px;
+}
+
+.turn_cross {
+
+}
+
+.turn_nought {
+
+}
+
+.turn-block__tumbler {
+  width: 100px;
+  height: 100px;
+  background: url('./images/arrow-tumbler.svg') no-repeat center/contain;
+  transition: transform 0.5s;
+}
+
+.turn-block__tumbler_noughts {
+  transform: rotate(0deg);
+}
+
+.turn-block__tumbler_crosses {
+  transform: rotate(-120deg);
 }
 
 .control {
@@ -74,43 +113,58 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin: 25px 0 0;
 }
 
 .field__cell {
   box-sizing: border-box;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #000;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
 }
+
 
 
 
 .field__win-line {
   position: absolute;
-  width: 100%;
-  height: 2px;
+
   background-color: red;
   opacity: 0; 
   z-index: 2;
 }
 
+.field__win-line_row {
+  width: 100%;
+  height: 2px;
+}
+
+.field__win-line_column {
+  width: 2px;
+  height: 100%;
+}
+
 .field__win-line_row-active {
+  width: 100%;
+  height: 2px;
   opacity: 1;
   transition: opacity 0.5s;
 }
 
 .field__win-line_column-active {
+  width: 2px;
+  height: 100%;
   opacity: 1;
   transition: opacity 0.5s;
-  transform: rotate(90deg);
-  margin-top: 50%;
+  /* transform: rotate(90deg);
+  margin-top: 50%; */
 }
 
 .field__win-line_diagonal-1 {
+  width: 100%;
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(45deg) scale(1.4);
@@ -119,6 +173,7 @@
 }
 
 .field__win-line_diagonal-2 {
+  width: 100%;
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(-45deg) scale(1.4);
