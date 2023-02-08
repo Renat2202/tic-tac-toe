@@ -21,6 +21,8 @@ let optionsInputValueTextsList = document.querySelectorAll(".options-popup__inpu
 
 let turnTumbler = document.querySelector(".turn-block__tumbler");// Turn Tumbler Arrow
 
+let turnsCount = 0;
+
 let optionsPopupOpenedClass = "options-popup_opened"; // Opened Popup Class
 
 let turn = 'Crosses'; // Current Turn
@@ -173,6 +175,9 @@ function submitOptions(options) {
 function checkWinner(array, value, textField, winLine) {
   const cellIsMatch = (cellValue) => cellValue === value;
 
+  // global count increase
+  turnsCount++;
+
   // check rows
   for (let i = 0; i < +gameOptions.cellNumber; i++) {
     if (array[i].every(cellIsMatch)) {
@@ -180,8 +185,12 @@ function checkWinner(array, value, textField, winLine) {
       textField.textContent = `Winner - ${winner}`;
       // winLine.classList.add(`field__win-line_row-${i + 1}`);
       winLine.classList.add(`field__win-line_row-active`);
-      console.log(`(${gameOptions.cellSize} * ${i +1}) - (${gameOptions.cellSize} / 2)`);
-      winLine.style.marginTop = `${(+gameOptions.cellSize * (i + 1)) - (+gameOptions.cellSize/2)}px`;
+      console.log(
+        `(${gameOptions.cellSize} * ${i + 1}) - (${gameOptions.cellSize} / 2)`
+      );
+      winLine.style.marginTop = `${
+        +gameOptions.cellSize * (i + 1) - +gameOptions.cellSize / 2
+      }px`;
       // console.log(winLine.style.marginTop);
       console.log(`Winner - ${winner}`);
       return;
@@ -203,7 +212,9 @@ function checkWinner(array, value, textField, winLine) {
         // margin-left: calc((-60px * 2) + (60px * 2) + 30px); // old
         // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`; // old
         // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / (+gameOptions.cellNumber % 2 === 0 ? 2 : 1))}px`; // old
-        winLine.style.marginLeft = `${(+gameOptions.cellSize/2) + (+gameOptions.cellSize * i)}px`;
+        winLine.style.marginLeft = `${
+          +gameOptions.cellSize / 2 + +gameOptions.cellSize * i
+        }px`;
         // console.log(winLine.style.marginLeft);
         console.log(`Winner - ${winner}`);
         return;
@@ -216,30 +227,40 @@ function checkWinner(array, value, textField, winLine) {
   let count = 0;
   for (let i = 0; i < +gameOptions.cellNumber; i++) {
     if (array[i][i] === value) {
-        count++;
+      count++;
     }
     if (count === +gameOptions.cellNumber) {
-        winner = value;
-        textField.textContent = `Winner - ${winner}`;
-        winLine.classList.add(`field__win-line_diagonal-1`);
-        console.log(`Winner - ${winner}`);
-        return;
+      winner = value;
+      textField.textContent = `Winner - ${winner}`;
+      winLine.classList.add(`field__win-line_diagonal-1`);
+      console.log(`Winner - ${winner}`);
+      return;
     }
   }
 
   // top-right to bottom-left diagonal
   count = 0;
-  for (let i = 0, j = +gameOptions.cellNumber - 1; i < +gameOptions.cellNumber, j >= 0; i++, j--) {
+  for (
+    let i = 0, j = +gameOptions.cellNumber - 1;
+    i < +gameOptions.cellNumber, j >= 0;
+    i++, j--
+  ) {
     if (array[j][i] === value) {
-        count++
+      count++;
     }
     if (count === +gameOptions.cellNumber) {
-        winner = value;
-        textField.textContent = `Winner - ${winner}`;
-        winLine.classList.add(`field__win-line_diagonal-2`);
-        console.log(`Winner - ${winner}`);
-        return;        
+      winner = value;
+      textField.textContent = `Winner - ${winner}`;
+      winLine.classList.add(`field__win-line_diagonal-2`);
+      console.log(`Winner - ${winner}`);
+      return;
     }
+  }
+
+  // check draw
+  if (turnsCount === Math.pow(+gameOptions.cellNumber, 2) && !winner) {
+    textField.textContent = `Draw!`;
+    console.log(`Draw`);
   }
 }
 
@@ -271,6 +292,7 @@ function newGame(field, winLine, gameInfo, options) {
   winLine.className = `field__win-line`;
   winner = null;
   turn = "Crosses";
+  turnsCount = 0;
   turnTumbler.className = `turn-block__tumbler turn-block__tumbler_crosses`;
   gameInfo.textContent = "";
   winLine.style.marginLeft = '';
