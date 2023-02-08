@@ -272,6 +272,7 @@ function newGame(field, winLine, gameInfo, options) {
   winner = null;
   turn = "Crosses";
   turnTumbler.className = `turn-block__tumbler turn-block__tumbler_crosses`;
+  gameInfo.textContent = "";
   winLine.style.marginLeft = '';
   winLine.style.marginTop = '';
   // gameInfo.textContent = `${turn} moves`; // deleted while tumbler added 
