@@ -120,10 +120,10 @@
 
 .field__cell {
   box-sizing: border-box;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #000;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
 }
 
 
@@ -164,6 +164,7 @@
 }
 
 .field__win-line_diagonal-1 {
+  width: 100%;
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(45deg) scale(1.4);
@@ -172,6 +173,7 @@
 }
 
 .field__win-line_diagonal-2 {
+  width: 100%;
   transition: opacity 0.5s;
   opacity: 1;
   transform: rotate(-45deg) scale(1.4);

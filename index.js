@@ -58,7 +58,7 @@ for (let i = 0; i < gameOptions.cellNumber; i++) {
 // Change Element Size Styles function
 function changeElementsSize(nodesClassName, styleValue) {
   let nodesList = document.querySelectorAll(`.${nodesClassName}`);
-  console.log(styleValue)
+  // console.log(styleValue)
   for (let element of nodesList) {
     element.style.width = `${styleValue}px`;
     element.style.height = `${styleValue}px`;
@@ -181,7 +181,8 @@ function checkWinner(array, value, textField, winLine) {
       // winLine.classList.add(`field__win-line_row-${i + 1}`);
       winLine.classList.add(`field__win-line_row-active`);
       console.log(`(${gameOptions.cellSize} * ${i +1}) - (${gameOptions.cellSize} / 2)`);
-      winLine.style.marginTop = `${(+gameOptions.cellSize * (i + 1)) - (+gameOptions.cellSize/2)}px`
+      winLine.style.marginTop = `${(+gameOptions.cellSize * (i + 1)) - (+gameOptions.cellSize/2)}px`;
+      // console.log(winLine.style.marginTop);
       console.log(`Winner - ${winner}`);
       return;
     }
@@ -203,6 +204,7 @@ function checkWinner(array, value, textField, winLine) {
         // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / 2)}px`; // old
         // winLine.style.marginLeft = `${(+gameOptions.cellSize * -2) + ((+gameOptions.cellSize) * i) + (+gameOptions.cellSize / (+gameOptions.cellNumber % 2 === 0 ? 2 : 1))}px`; // old
         winLine.style.marginLeft = `${(+gameOptions.cellSize/2) + (+gameOptions.cellSize * i)}px`;
+        // console.log(winLine.style.marginLeft);
         console.log(`Winner - ${winner}`);
         return;
       }
@@ -270,8 +272,9 @@ function newGame(field, winLine, gameInfo, options) {
   winner = null;
   turn = "Crosses";
   turnTumbler.className = `turn-block__tumbler turn-block__tumbler_crosses`;
+  winLine.style.marginLeft = '';
+  winLine.style.marginTop = '';
   // gameInfo.textContent = `${turn} moves`; // deleted while tumbler added 
-  console.log(options.cellSize, gameOptions.cellSize)
   // if (options.cellSize !== gameOptions.cellSize) {
     changeElementsSize("field__cell", options.cellSize);
   // }
